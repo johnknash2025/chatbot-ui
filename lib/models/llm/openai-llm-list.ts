@@ -81,10 +81,28 @@ const GPT3_5Turbo: LLM = {
   }
 }
 
+// o3 mini (OpenAI)
+const O3Mini: LLM = {
+  modelId: "o3-mini-2025-01-31",
+  modelName: "o3 mini (OpenAI)",
+  provider: "openai",
+  hostedId: "o3-mini-2025-01-31",
+  platformLink: OPENAI_PLATORM_LINK,
+  imageInput: true,
+  contextLength: 128000, // 最大トークン数を明示
+  pricing: {
+    currency: "USD",
+    unit: "1M tokens",
+    inputCost: 1,
+    outputCost: 2
+  }
+}
+
 export const OPENAI_LLM_LIST: LLM[] = [
   GPT4o,
   GPT4Turbo,
   GPT4Vision,
   GPT4,
-  GPT3_5Turbo
+  GPT3_5Turbo,
+  O3Mini
 ]

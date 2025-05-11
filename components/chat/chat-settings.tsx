@@ -59,7 +59,15 @@ export const ChatSettings: FC<ChatSettingsProps> = ({}) => {
     })),
     ...availableHostedModels,
     ...availableLocalModels,
-    ...availableOpenRouterModels
+    ...availableOpenRouterModels,
+    {
+      modelId: "o3-mini-2025-01-31",
+      modelName: "o3 mini (OpenAI)",
+      provider: "openai" as ModelProvider,
+      hostedId: "o3-mini-2025-01-31",
+      platformLink: "https://platform.openai.com/docs/models/o3-mini",
+      imageInput: true
+    }
   ]
 
   const fullModel = allModels.find(llm => llm.modelId === chatSettings.model)

@@ -24,15 +24,14 @@ export async function POST(request: Request) {
       organization: profile.openai_organization_id
     })
 
+    const maxTokens =
+      CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_TOKEN_OUTPUT_LENGTH || 4096
+
     const response = await openai.chat.completions.create({
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages: messages as ChatCompletionCreateParamsBase["messages"],
       temperature: chatSettings.temperature,
-      max_tokens:
-        chatSettings.model === "gpt-4-vision-preview" ||
-        chatSettings.model === "gpt-4o"
-          ? 4096
-          : null, // TODO: Fix
+      max_tokens: maxTokens,
       stream: true
     })
 
