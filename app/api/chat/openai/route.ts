@@ -4,6 +4,7 @@ import { OpenAIStream, StreamingTextResponse } from "ai"
 import { ServerRuntime } from "next"
 import OpenAI from "openai"
 import { ChatCompletionCreateParamsBase } from "openai/resources/chat/completions.mjs"
+import { CHAT_SETTING_LIMITS } from "@/lib/chat-setting-limits"
 
 export const runtime: ServerRuntime = "edge"
 
@@ -27,13 +28,17 @@ export async function POST(request: Request) {
     const maxTokens =
       CHAT_SETTING_LIMITS[chatSettings.model]?.MAX_TOKEN_OUTPUT_LENGTH || 4096
 
-    const response = await openai.chat.completions.create({
+    const isO3Mini = chatSettings.model === "o3-mini-2025-01-31"
+    const requestParams = {
       model: chatSettings.model as ChatCompletionCreateParamsBase["model"],
       messages: messages as ChatCompletionCreateParamsBase["messages"],
-      temperature: chatSettings.temperature,
-      max_tokens: maxTokens,
-      stream: true
-    })
+      stream: true,
+      ...(isO3Mini
+        ? { max_completion_tokens: maxTokens }
+        : { max_tokens: maxTokens, temperature: chatSettings.temperature })
+    }
+
+    const response = await openai.chat.completions.create(requestParams)
 
     const stream = OpenAIStream(response)
 
