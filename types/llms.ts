@@ -15,6 +15,7 @@ export type OpenAILLMID =
   | "gpt-4-vision-preview" // GPT-4 Vision
   | "gpt-4" // GPT-4
   | "gpt-3.5-turbo" // Updated GPT-3.5 Turbo
+  | "o3-mini-2025-01-31" // o3-mini 追加
 
 // Google Models
 export type GoogleLLMID =
@@ -74,6 +75,7 @@ export interface LLM {
     inputCost: number
     outputCost?: number
   }
+  contextLength?: number // 最大トークン数などを明示する用途で追加
 }
 
 export interface OpenRouterLLM extends LLM {

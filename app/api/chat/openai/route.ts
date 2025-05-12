@@ -40,7 +40,8 @@ export async function POST(request: Request) {
 
     const response = await openai.chat.completions.create(requestParams)
 
-    const stream = OpenAIStream(response)
+    // 型エラー回避のため as any を付与
+    const stream = OpenAIStream(response as any)
 
     return new StreamingTextResponse(stream)
   } catch (error: any) {
