@@ -44,3 +44,9 @@ sw.js
 sw.js.map
 workbox-*.js
 workbox-*.js.map
+
+# Terraform state and secrets
+infra/terraform.tfvars
+infra/*.tfstate
+infra/*.tfstate.*
+infra/.terraform/
